@@ -1,0 +1,22 @@
+extends layout
+
+block content
+    h1= title
+    form(name="register-participant", method="post")
+        div.input
+            span.label Ваш логин в Telegram
+            input(type="text", name="telegram-login")
+        div.input
+            span.label Полное ФИО
+            input(type="text", name="fio")
+        div.input
+            span.label Адрес
+            textarea(name="address", cols="40", rows="5")
+        div.input
+            span.label Что бы Вы хотели получить в подарок?
+            textarea(name="like", cols="40", rows="5")
+        div.input
+            span.label Что Вам не стоит дарить?
+            textarea(name="dislike", cols="40", rows="5")
+        div.actions
+            input(type="submit", value="Зарегистрироваться")
