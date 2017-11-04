@@ -1,22 +1,20 @@
-extends layout
-
-block content
-    h1= title
-    form(name="register-participant", method="post")
-        div.input
-            span.label Ваш логин в Telegram
-            input(type="text", name="telegram_login")
-        div.input
-            span.label Полное ФИО
-            input(type="text", name="fio")
-        div.input
-            span.label Адрес
-            textarea(name="address", cols="40", rows="5")
-        div.input
-            span.label Что бы Вы хотели получить в подарок?
-            textarea(name="like", cols="40", rows="5")
-        div.input
-            span.label Что Вам не стоит дарить?
-            textarea(name="dislike", cols="40", rows="5")
-        div.actions
-            input(type="submit", value="Зарегистрироваться")
+doctype html
+html
+    head
+        title Node Authentication
+        link(rel='stylesheet', href='//netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap.min.css')
+        // load bootstrap css
+        link(rel='stylesheet', href='//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css')
+        // load fontawesome
+        style.
+            body        { padding-top:80px; }
+    body
+        .container
+            .jumbotron.text-center
+                h1
+                    span.fa.fa-lock
+                    |  Node Authentication
+                p Login or Register with:
+                a.btn.btn-danger(href='/auth/google')
+                    span.fa.fa-google-plus
+                    |  Google

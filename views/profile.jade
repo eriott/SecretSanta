@@ -1,0 +1,47 @@
+//extends layout
+//
+//block content
+//    h1= title
+//    form(name="register-participant", method="post")
+//        div.input
+//            span.label Полное ФИО
+//            input(type="text", name="fullName")
+//        div.input
+//            span.label Адрес
+//            textarea(name="address", cols="40", rows="5")
+//        div.input
+//            span.label Что бы Вы хотели получить в подарок?
+//            textarea(name="wanted", cols="40", rows="5")
+//        div.input
+//            span.label Что Вам не стоит дарить?
+//            textarea(name="unwanted", cols="40", rows="5")
+//        div.actions
+//            input(type="submit", value="Зарегистрироваться")
+
+
+doctype html
+// views/profile.ejs
+html
+    head
+        title Node Authentication
+        link(rel='stylesheet', href='//netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap.min.css')
+        link(rel='stylesheet', href='//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css')
+        style.
+            body        { padding-top:80px; word-wrap:break-word; }
+    body
+        .container
+            .page-header.text-center
+                h1
+                    span.fa.fa-anchor
+                    |  Profile Page
+                a.btn.btn-default.btn-sm(href='/logout') Logout
+            .row
+                // GOOGLE INFORMATION
+                .col-sm-6
+                    .well
+                        h3.text-danger
+                            span.fa.fa-google-plus
+                            |  Google
+                        p
+                            strong user.google.id
+                            | :
