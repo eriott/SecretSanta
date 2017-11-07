@@ -7,8 +7,12 @@ let userSchema = mongoose.Schema({
         token        : String,
         email        : String,
         name         : String
-    }
-
+    },
+    postData: {
+        fullName: String,
+        address: String
+    },
+    about: String
 });
 
 // create the model for users and expose it to our app
