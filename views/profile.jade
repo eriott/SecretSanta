@@ -8,13 +8,15 @@ block content
                 form(name="register-participant", method="post")
                     div.form-group
                         label(for="fullName") Полное ФИО
-                        input.form-control#fullName(type="text", name="fullName")
+                        input.form-control#fullName(type="text", name="fullName", value="#{user.postData.fullName}")
                     div.form-group
                         label(for="address") Адрес
                         textarea.form-control#address(name="address", cols="40", rows="5")
+                            | #{user.postData.address}
                     div.form-group
                         label(for="about") Расскажите о себе
                         textarea.form-control#about(name="about", cols="40", rows="10")
+                            | #{user.about}
                     div.form-group
                         input.form-control(type="submit", value="Сохранить")
             .col

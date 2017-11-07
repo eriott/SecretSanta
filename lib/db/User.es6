@@ -9,10 +9,10 @@ let userSchema = mongoose.Schema({
         name         : String
     },
     postData: {
-        fullName: String,
-        address: String
+        fullName: {type: String, default: "", required: true},
+        address: {type: String, default: "", required: true}
     },
-    about: String
+    about: {type: String, default: "", required: true}
 });
 
 // create the model for users and expose it to our app
