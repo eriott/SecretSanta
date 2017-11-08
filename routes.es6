@@ -17,7 +17,24 @@ module.exports = function (app, passport) {
         });
     });
 
-    app.post('/profile', isLoggedIn, function (req, res) {
+    // app.post('/profile', isLoggedIn, function (req, res) {
+        // update user data
+        // let user = req.user;
+        // let params = req.body;
+        // user.postData.fullName = params.fullName;
+        // user.postData.address = params.address;
+        // user.about = params.about;
+        //
+        // user.save((err, user) => {
+        //     if (err) {
+        //         console.log("Error occured", err)
+        //     } else {
+        //         console.log("User saved", user)
+        //     }
+        // })
+    // });
+
+    app.post('/update_profile', isLoggedIn, function (req, res) {
         // update user data
         let user = req.user;
         let params = req.body;
@@ -29,7 +46,9 @@ module.exports = function (app, passport) {
             if (err) {
                 console.log("Error occured", err)
             } else {
-                console.log("User saved", user)
+                console.log("User saved", user);
+                req.user = user;
+                res.send("Saved");
             }
         })
     });

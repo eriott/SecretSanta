@@ -5,7 +5,7 @@ block content
         .row
             .col
             .col-6
-                form(name="register-participant", method="post")
+                form(name="register-participant")
                     div.form-group
                         label(for="fullName") Полное ФИО
                         input.form-control#fullName(type="text", name="fullName", value="#{user.postData.fullName}")
@@ -18,5 +18,19 @@ block content
                         textarea.form-control#about(name="about", cols="40", rows="10")
                             | #{user.about}
                     div.form-group
-                        input.form-control(type="submit", value="Сохранить")
+                        button#submit.btn.btn-primary
+                            | Сохранить
+                        label#reply
             .col
+    script(type='text/javascript').
+        $('#submit').click(function () {
+            var data = {};
+            data.fullName = $('#fullName').val()
+            data.address = $('#address').val()
+            data.about = $('#about').val()
+
+            $('#reply').css('opacity', '1').text("Сохраняю...")
+            $.post('/update_profile', data, function (result) {
+                $('#reply').text("Сохранено.").delay(2000).animate({opacity:0});
+            })
+        })
