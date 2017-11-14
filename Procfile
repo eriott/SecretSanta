@@ -1,1 +1,1 @@
-web: babel-node bin/www.es6
+web: ./node_modules/.bin/babel-node ./bin/www.es6
