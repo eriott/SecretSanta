@@ -5,6 +5,13 @@ block content
         .row
             .col
             .col-6
+                | #{target.postData.fullName}
+                | #{target.postData.address}
+                | #{target.about}
+            .col
+        .row
+            .col
+            .col-6
                 form(name="register-participant")
                     div.form-group
                         label(for="fullName") Полное ФИО

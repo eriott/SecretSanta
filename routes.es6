@@ -9,8 +9,25 @@ module.exports = function (app, passport) {
     });
 
     app.get('/profile', isLoggedIn, function (req, res) {
-        res.render('profile', {
-            user: req.user // get the user out of session and pass to template
+        Assignment.findOne({pairs: {$elemMatch: {from: req.user._id}}}).then(assignment => {
+            console.log(req.user);
+            //console.log(assignment);
+
+            if (!assignment) {
+                res.render('profile', {
+                    user: req.user, // get the user out of session and pass to template
+                    target: {}
+                });
+            } else {
+                let target = assignment.pairs.filter(pair => pair.from.equals(req.user._id))[0].to;
+                return User.findOne({_id: target}).then(target => {
+                    console.log("target", target);
+                    res.render('profile', {
+                        user: req.user, // get the user out of session and pass to template
+                        target: target
+                    });
+                })
+            }
         });
     });
 
