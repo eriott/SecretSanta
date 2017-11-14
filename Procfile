@@ -1,1 +1,1 @@
-web: ./node_modules/.bin/babel-node ./bin/www.es6
+web: ./node_modules/.bin/babel-node NODE_ENV=staging ./bin/www.es6

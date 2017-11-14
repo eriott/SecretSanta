@@ -1,10 +1,12 @@
-import mongoose from 'mongoose';
+import mongoose from 'mongoose'
+import config from '../../config'
 
 // Using native promises (see http://mongoosejs.com/docs/promises.html)
 // Mongoose's default promise library `mpromise` is deprecated
 mongoose.Promise = global.Promise;
 
-let dbUrl = 'mongodb://localhost/secretsanta';
+console.log('config', config);
+let dbUrl = config.db;
 console.log(`Connect to ${dbUrl}`);
 mongoose.connect(dbUrl);
 
