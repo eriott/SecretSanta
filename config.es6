@@ -1,6 +1,6 @@
 let config = {
     staging: {
-        db: 'mongodb://secretsanta:G5fk1q85hgverTQ0@ds261755.mlab.com:61755/secretsanta-staging'
+        db: process.env.STAGING_DB_URI
     },
     local: {
         db: 'mongodb://localhost/secretsanta'
