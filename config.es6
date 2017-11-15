@@ -4,7 +4,7 @@ let config = {
         googleAuth : {
             'clientID'      : '606219331744-rao3ldm0165pr686c1e2354elnijd22b.apps.googleusercontent.com',
             'clientSecret'  :  process.env.GOOGLE_CLIENT_SECRET,
-            'callbackURL'   : 'http://localhost:3000/auth/google/callback'
+            'callbackURL'   : 'https://evening-chamber-86939.herokuapp.com/auth/google/callback'
         }
     },
     local: {
@@ -12,7 +12,7 @@ let config = {
         googleAuth : {
             'clientID'      : '606219331744-9dl7cdr585hcre7eubl0t6b2fkbbabn6.apps.googleusercontent.com',
             'clientSecret'  :  process.env.GOOGLE_CLIENT_SECRET,
-            'callbackURL'   : 'https://evening-chamber-86939.herokuapp.com/auth/google/callback'
+            'callbackURL'   : 'http://localhost:3000/auth/google/callback'
         }
     }
 };
