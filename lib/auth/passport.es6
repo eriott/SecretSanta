@@ -1,13 +1,8 @@
-// config/passport.js
+import config from '../../config'
+import User from '../../lib/db/User'
 
 // load all the things we need
 let GoogleStrategy = require('passport-google-oauth').OAuth2Strategy;
-
-// load up the user model
-let User       = require('../../lib/db/User');
-
-// load the auth variables
-let configAuth = require('./auth');
 
 module.exports = function(passport) {
 
@@ -28,9 +23,9 @@ module.exports = function(passport) {
     // =========================================================================
     passport.use(new GoogleStrategy({
 
-            clientID        : configAuth.googleAuth.clientID,
-            clientSecret    : configAuth.googleAuth.clientSecret,
-            callbackURL     : configAuth.googleAuth.callbackURL,
+            clientID        : config.googleAuth.clientID,
+            clientSecret    : config.googleAuth.clientSecret,
+            callbackURL     : config.googleAuth.callbackURL,
 
         },
         function(token, refreshToken, profile, done) {
