@@ -2,7 +2,7 @@ extends layout
 
 block content
     .container
-        - if (typeof(target) !== 'undefined' || typeof(target.postData) !== 'undefined'){
+        - if (locals.target && locals.target.postData) {
         .row
             .col
             .col-6
@@ -11,7 +11,7 @@ block content
                 | #{target.about}
             .col
         .row
-        -}
+        - }
             .col
             .col-6
                 form(name="register-participant")
