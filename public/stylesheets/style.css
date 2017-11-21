@@ -1,8 +1,15 @@
-body {
-  padding: 50px;
-  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
-}
-
 a {
   color: #00B7FF;
+}
+
+.postcard-item-header {
+    color: dimgray;
+}
+
+.postcard-item {
+  color: #252525;
+  padding-bottom: 3px;
+  margin-left: 10px;
+  border-bottom: 1px dashed;
+  border-color: dimgray;
 }

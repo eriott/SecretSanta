@@ -1,12 +1,8 @@
 extends layout
 
 block content
-        .container-fluid
-            .jumbotron.text-center
-                h1
-                    span.fa.fa-lock
-                    |  Secret Santa
-                p Login or Register with:
-                a.btn.btn-danger(href='/auth/google')
-                    span.fa.fa-google-plus
-                    |  Google
+    .container.text-center
+        p Login or Register with:
+        a.btn.btn-danger(href='/auth/google')
+            span.fa.fa-google-plus
+                |  Google

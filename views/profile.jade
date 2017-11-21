@@ -2,18 +2,29 @@ extends layout
 
 block content
     .container
-        - if (locals.target && locals.target.postData) {
-        .row
-            .col
-            .col-6
-                | #{target.postData.fullName}
-                | #{target.postData.address}
-                | #{target.about}
-            .col
-        .row
-        - }
-            .col
-            .col-6
+        ul.nav.nav-tabs#myTab(role="tabList")
+            li.nav-item
+                a.nav-link.active#home-tab(data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true")
+                    | Activities
+            li.nav-item
+                a.nav-link#profile-tab(data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false")
+                    | My profile
+
+        div.tab-content#myTabContent.mt-3
+            div.tab-pane.fade.show.active#home(role="tabpanel" aria-labelledby="home-tab")
+                - if (locals.target && locals.target.postData) {
+                    .div.rounded.border.border-secondary.p-3
+                        p
+                            span.postcard-item-header Кому
+                            span.postcard-item #{target.postData.fullName}
+                        p
+                            span.postcard-item-header Куда
+                            span.postcard-item #{target.postData.address}
+                        p
+                            span.postcard-item-header Об адресате
+                            span.postcard-item #{target.about}
+                - }
+            div.tab-pane.fade#profile(role="tabpanel" aria-labelledby="profile-tab")
                 form(name="register-participant")
                     div.form-group
                         label(for="fullName") Полное ФИО
@@ -30,7 +41,7 @@ block content
                         button#submit.btn.btn-primary
                             | Сохранить
                         label#reply
-            .col
+
     script(type='text/javascript').
         $('#submit').click(function () {
             var data = {};
