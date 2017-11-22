@@ -20,13 +20,13 @@ block content
                                 - if (event.addressee) {
                                     p
                                         span.postcard-item-header Кому
-                                        span.postcard-item #{event.fullName}
+                                        span.postcard-item #{event.addressee.fullName}
                                     p
                                         span.postcard-item-header Куда
-                                        span.postcard-item #{event.address}
+                                        span.postcard-item #{event.addressee.address}
                                     p
                                         span.postcard-item-header Об адресате
-                                        span.postcard-item #{event.about}
+                                        span.postcard-item #{event.addressee.about}
                             - } else {
                                 | Nothing yet!
                             - }

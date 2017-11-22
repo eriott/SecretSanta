@@ -1,6 +1,5 @@
-import User from './lib/db/User'
-import Event from './lib/db/Event'
 import UserEventService from './lib/services/UserEventService'
+import AssignAddressesService from './lib/services/AssignAddressesService'
 
 module.exports = function (app, passport) {
 
@@ -17,46 +16,7 @@ module.exports = function (app, passport) {
                 target: {}
             });
         });
-        // Event.findOne({members: req.user._id}).then(event => {
-        //     if (!event || event.pairs.length === 0) {
-        //         res.render('profile', {
-        //             user: req.user, // get the user out of session and pass to template
-        //             events: [event],
-        //             target: {}
-        //         });
-        //     } else {
-        //         let target = event.pairs.filter(pair => pair.from.equals(req.user._id))[0].to;
-        //         return User.findOne({_id: target}).then(target => {
-        //             console.log("target", target);
-        //             res.render('profile', {
-        //                 user: req.user, // get the user out of session and pass to template
-        //                 target: target
-        //             });
-        //         })
-        //     }
-        // });
     });
-
-    // app.get('/profile', isLoggedIn, function (req, res) {
-    //     Event.findOne({members: req.user._id}).then(event => {
-    //         if (!event || event.pairs.length === 0) {
-    //             res.render('profile', {
-    //                 user: req.user, // get the user out of session and pass to template
-    //                 events: [event],
-    //                 target: {}
-    //             });
-    //         } else {
-    //             let target = event.pairs.filter(pair => pair.from.equals(req.user._id))[0].to;
-    //             return User.findOne({_id: target}).then(target => {
-    //                 console.log("target", target);
-    //                 res.render('profile', {
-    //                     user: req.user, // get the user out of session and pass to template
-    //                     target: target
-    //                 });
-    //             })
-    //         }
-    //     });
-    // });
 
     app.post('/update_profile', isLoggedIn, function (req, res) {
         // update user data
@@ -87,31 +47,9 @@ module.exports = function (app, passport) {
             failureRedirect: '/'
         }));
 
-
     app.get('/mix_users', isLoggedIn, function (req, res) {
-        // update user data
-        User.find().then(users => {
-            let ids = users.map(user => user._id);
-            let all = users.map(user => user._id);
-            let pairs = [];
-            ids.forEach(id => {
-                let others = all.filter(otherId => otherId !== id);
-
-                let index = Math.floor(Math.random() * others.length);
-                let candidate = others[index];
-                pairs.push({from: id, to: candidate});
-                let start = all.indexOf(candidate);
-                all.splice(start, 1);
-            });
-            new Event({pairs: pairs}).save((err, saved) => {
-                if (err) {
-                    console.log("Error occured", err);
-                } else {
-                    console.log("Saved assignment", saved);
-                }
-                res.redirect("/");
-            });
-        })
+        new AssignAddressesService().assign()
+            .then(() => res.redirect("/"))
     });
 };
 
