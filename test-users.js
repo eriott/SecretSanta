@@ -1,4 +1,4 @@
-[{
+let users = [{
     google: {
         id: "google id 1",
         token: "google token 1",
@@ -36,4 +36,4 @@
             address: "112345, г. Москва, ул. Ленина, д. 12к5 кв 50 3"
         },
         about: "Some info about me."
-    }]
+    }];

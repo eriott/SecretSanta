@@ -1,5 +1,6 @@
 import User from './lib/db/User'
-import Assignment from './lib/db/Assignment'
+import Event from './lib/db/Event'
+import UserEventService from './lib/services/UserEventService'
 
 module.exports = function (app, passport) {
 
@@ -9,27 +10,53 @@ module.exports = function (app, passport) {
     });
 
     app.get('/profile', isLoggedIn, function (req, res) {
-        Assignment.findOne({pairs: {$elemMatch: {from: req.user._id}}}).then(assignment => {
-            console.log(req.user);
-            //console.log(assignment);
-
-            if (!assignment) {
-                res.render('profile', {
-                    user: req.user, // get the user out of session and pass to template
-                    target: {}
-                });
-            } else {
-                let target = assignment.pairs.filter(pair => pair.from.equals(req.user._id))[0].to;
-                return User.findOne({_id: target}).then(target => {
-                    console.log("target", target);
-                    res.render('profile', {
-                        user: req.user, // get the user out of session and pass to template
-                        target: target
-                    });
-                })
-            }
+        new UserEventService().getByUser(req.user).then(events => {
+            res.render('profile', {
+                user: req.user, // get the user out of session and pass to template
+                events: events,
+                target: {}
+            });
         });
+        // Event.findOne({members: req.user._id}).then(event => {
+        //     if (!event || event.pairs.length === 0) {
+        //         res.render('profile', {
+        //             user: req.user, // get the user out of session and pass to template
+        //             events: [event],
+        //             target: {}
+        //         });
+        //     } else {
+        //         let target = event.pairs.filter(pair => pair.from.equals(req.user._id))[0].to;
+        //         return User.findOne({_id: target}).then(target => {
+        //             console.log("target", target);
+        //             res.render('profile', {
+        //                 user: req.user, // get the user out of session and pass to template
+        //                 target: target
+        //             });
+        //         })
+        //     }
+        // });
     });
+
+    // app.get('/profile', isLoggedIn, function (req, res) {
+    //     Event.findOne({members: req.user._id}).then(event => {
+    //         if (!event || event.pairs.length === 0) {
+    //             res.render('profile', {
+    //                 user: req.user, // get the user out of session and pass to template
+    //                 events: [event],
+    //                 target: {}
+    //             });
+    //         } else {
+    //             let target = event.pairs.filter(pair => pair.from.equals(req.user._id))[0].to;
+    //             return User.findOne({_id: target}).then(target => {
+    //                 console.log("target", target);
+    //                 res.render('profile', {
+    //                     user: req.user, // get the user out of session and pass to template
+    //                     target: target
+    //                 });
+    //             })
+    //         }
+    //     });
+    // });
 
     app.post('/update_profile', isLoggedIn, function (req, res) {
         // update user data
@@ -76,7 +103,7 @@ module.exports = function (app, passport) {
                 let start = all.indexOf(candidate);
                 all.splice(start, 1);
             });
-            new Assignment({pairs: pairs}).save((err, saved) => {
+            new Event({pairs: pairs}).save((err, saved) => {
                 if (err) {
                     console.log("Error occured", err);
                 } else {

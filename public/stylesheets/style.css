@@ -13,3 +13,7 @@ a {
   border-bottom: 1px dashed;
   border-color: dimgray;
 }
+
+.event-header {
+  font-size: 14pt;
+}

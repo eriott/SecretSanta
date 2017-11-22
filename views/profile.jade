@@ -12,18 +12,25 @@ block content
 
         div.tab-content#myTabContent.mt-3
             div.tab-pane.fade.show.active#home(role="tabpanel" aria-labelledby="home-tab")
-                - if (locals.target && locals.target.postData) {
-                    .div.rounded.border.border-secondary.p-3
-                        p
-                            span.postcard-item-header Кому
-                            span.postcard-item #{target.postData.fullName}
-                        p
-                            span.postcard-item-header Куда
-                            span.postcard-item #{target.postData.address}
-                        p
-                            span.postcard-item-header Об адресате
-                            span.postcard-item #{target.about}
-                - }
+                  for event in events
+                        div.rounded.border.border-secondary.p-3
+                            div.event-header
+                                | #{event.name}
+                            div.event-content
+                                - if (event.addressee) {
+                                    p
+                                        span.postcard-item-header Кому
+                                        span.postcard-item #{event.fullName}
+                                    p
+                                        span.postcard-item-header Куда
+                                        span.postcard-item #{event.address}
+                                    p
+                                        span.postcard-item-header Об адресате
+                                        span.postcard-item #{event.about}
+                            - } else {
+                                | Nothing yet!
+                            - }
+
             div.tab-pane.fade#profile(role="tabpanel" aria-labelledby="profile-tab")
                 form(name="register-participant")
                     div.form-group
