@@ -1,5 +1,5 @@
-import mongoose from './mongoose';
-import {ObjectId} from './mongoose'
+import mongoose from '../mongoose';
+import {ObjectId} from '../mongoose'
 
 // define the schema for our user model
 let eventSchema = mongoose.Schema({

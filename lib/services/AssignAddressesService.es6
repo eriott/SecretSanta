@@ -1,4 +1,4 @@
-import Event from '../db/Event'
+import Event from '../db/models/Event'
 
 export default class AssignAddressesService {
     assign() {

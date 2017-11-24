@@ -1,4 +1,4 @@
-import Event from '../db/Event'
+import Event from '../db/models/Event'
 import UserEvent from '../dto/Event'
 import Addressee from '../dto/Аddressee'
 
@@ -12,10 +12,9 @@ export default class UserEventService {
                     if (pair && pair.to) {
                         let targetUser = event.members.filter(member =>  member._id.equals(pair.to))[0];
                         addressee = new Addressee(Object.assign(targetUser.toJSON().postData, targetUser.toJSON()))
-                        console.log(targetUser.toJSON())
                     }
                 }
-                return new UserEvent(Object.assign(event.toJSON(), {addressee: addressee, isPackageSent: false}))
+                return new UserEvent(Object.assign(event.toJSON(), {addressee: addressee, isPackageSent: false, endDate: event.endDate.toDateString()}))
             })
         });
     }
