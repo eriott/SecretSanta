@@ -15,5 +15,15 @@ a {
 }
 
 .event-header {
-  font-size: 14pt;
+  font-size: 15pt;
+}
+
+.sending-date {
+  font-size: 16pt;
+  color: #17a2b8;
+  font-weight: bold;
+}
+
+.empty-postcard {
+  text-align: center;
 }
