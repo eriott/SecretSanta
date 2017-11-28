@@ -7,6 +7,8 @@ export default class UserEvent {
         this.endDate = data.endDate;
         this.addressee = data.addressee;
         this.isGiftSent = data.isGiftSent;
-        this.isGiftReceived = data.isGiftReceived
+        this.isGiftReceived = data.isGiftReceived;
+        this.membersCount = data.membersCount;
+        this.completion = data.completion;
     }
 }

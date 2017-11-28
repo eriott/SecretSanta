@@ -2,7 +2,7 @@ extends layout
 
 block content
     .container
-        ul.nav.nav-tabs#myTab(role="tabList")
+        ul.nav.nav-pills#myTab(role="tabList")
             li.nav-item
                 a.nav-link.active#home-tab(data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true")
                     | Activities
@@ -16,8 +16,10 @@ block content
                         div.rounded.border.border-secondary.mt-3
                             div.event-header.p-3
                                 | #{event.name}
+                                span(style="float: right")
+                                    | #{event.membersCount} members
                             div.progress(style="height: 5px")
-                                div.progress-bar.bg-info(role="progressbar" style="width: 50%" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100")
+                                div.progress-bar.bg-secondary(role="progressbar" style="width: #{event.completion}%" aria-valuenow="#{event.completion}" aria-valuemin="0" aria-valuemax="100")
                             div.event-content.p-3
                                 - if (event.addressee) {
                                     input.event-id(type="hidden" name="target" value="#{event.id}")

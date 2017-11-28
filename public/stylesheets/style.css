@@ -1,7 +1,3 @@
-a {
-  color: #00B7FF;
-}
-
 .postcard-item-header {
     color: dimgray;
 }
@@ -20,10 +16,27 @@ a {
 
 .sending-date {
   font-size: 16pt;
-  color: #17a2b8;
+  color: #e05271;
   font-weight: bold;
 }
 
 .empty-postcard {
   text-align: center;
+}
+
+.bg-main {
+  background-color: #17a2b8!important;
+}
+
+.bg-secondary {
+    background-color: #e05271!important;
+}
+
+.nav-pills .nav-link.active, .nav-pills .show>.nav-link {
+    color: #fff;
+    background-color: #17a2b8!important;
+}
+
+.nav li a {
+    color: #676767;
 }

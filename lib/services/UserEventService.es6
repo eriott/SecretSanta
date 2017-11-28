@@ -15,13 +15,21 @@ export default class UserEventService {
                         addressee = new Addressee(Object.assign(targetUser.toJSON().postData, targetUser.toJSON()))
                     }
                 }
+
+                let timeDiff = Math.abs(event.endDate.getTime() - event.startDate.getTime());
+                let daysTotal = Math.ceil(timeDiff / (1000 * 3600 * 24));
+                timeDiff = Math.abs(new Date().getTime() - event.startDate.getTime());
+                let daysGone = Math.ceil(timeDiff / (1000 * 3600 * 24));
+
                 return new UserEvent(Object.assign(event.toJSON(), {
                     id: event.toJSON()._id,
                     user: user,
                     addressee: addressee,
                     isGiftSent: pair ? pair.isGiftSent : undefined,
                     isGiftReceived: pair ? pair.isGiftReceived : undefined,
-                    endDate: event.endDate.toDateString()
+                    endDate: event.endDate.toDateString(),
+                    membersCount: event.members.length,
+                    completion: Math.round(daysGone / daysTotal * 100)
                 }))
             })
         }).catch(err => {
