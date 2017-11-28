@@ -24,6 +24,8 @@ export default class UserEventService {
                     endDate: event.endDate.toDateString()
                 }))
             })
+        }).catch(err => {
+            console.error(err);
         });
     }
 
@@ -41,6 +43,8 @@ export default class UserEventService {
         return Event.update({_id: event.id, 'pairs.from': event.user._id}, {'$set': set})
             .then(updated => {
                 console.log(updated)
-            })
+            }).catch(err => {
+                console.log(err);
+            });
     }
 }

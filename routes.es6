@@ -3,7 +3,6 @@ import AssignAddressesService from './lib/services/AssignAddressesService'
 import UserEvent from './lib/dto/UserEvent'
 
 module.exports = function (app, passport) {
-
     // route for home page
     app.get('/', function (req, res) {
         res.render('index'); // load the index.ejs file
@@ -11,7 +10,6 @@ module.exports = function (app, passport) {
 
     app.get('/profile', isLoggedIn, function (req, res) {
         new UserEventService().getByUser(req.user).then(events => {
-            console.log(events)
             res.render('profile', {
                 user: req.user, // get the user out of session and pass to template
                 events: events,
@@ -43,7 +41,6 @@ module.exports = function (app, passport) {
         let user = req.user;
         let params = req.body;
 
-        console.log('update event', params);
         new UserEventService().save(new UserEvent(Object.assign(params, {user: req.user})))
     });
 

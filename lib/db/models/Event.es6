@@ -2,6 +2,7 @@ import mongoose, {ObjectId} from '../mongoose';
 
 // define the schema for our user model
 let eventSchema = mongoose.Schema({
+    uid: {type: String, required: true},
     name: {type: String, default: "Secret Santa " + new Date().getFullYear()},
     startDate: Date,
     endDate: Date,
