@@ -32,7 +32,7 @@ module.exports = function (app, passport) {
             } else {
                 console.log("User saved", user);
                 req.user = user;
-                res.send("Saved");
+                res.send(user);
             }
         })
     });

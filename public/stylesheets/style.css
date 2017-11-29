@@ -51,3 +51,8 @@
     color: gray;
     margin-left: 20px;
 }
+
+.badge {
+    font-size: 12pt;
+    margin-left: 10px;
+}

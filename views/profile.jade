@@ -9,6 +9,10 @@ block content
             li.nav-item
                 a.nav-link#profile-tab(data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false")
                     | My profile
+                    - if (user.postData.fullName === "" || user.postData.address === "") {
+                        span.badge.badge-warning
+                            | !
+                     - }
 
         div.tab-content#myTabContent.mt-3
             div.tab-pane.fade.show.active#home(role="tabpanel" aria-labelledby="home-tab")
@@ -82,6 +86,16 @@ block content
             $('#reply').css('opacity', '1').text("Сохраняю...");
             $.post('/update_profile', data, function (result) {
                 $('#reply').text("Сохранено.").delay(2000).animate({opacity:0});
+
+                let badgeExists = $('#profile-tab').find('.badge').length > 0;
+
+                if (!badgeExists && (result.postData.fullName === '' || result.postData.address === '')) {
+                    $('#profile-tab').append('<span class="badge badge-warning">!</span>');
+                }
+
+                if (badgeExists && result.postData.fullName !== '' && result.postData.address !== '') {
+                    $('#profile-tab .badge').remove();
+                }
             })
         })
 
