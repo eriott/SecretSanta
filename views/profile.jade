@@ -51,7 +51,7 @@ block content
                                 - }
 
             div.tab-pane.fade#profile(role="tabpanel" aria-labelledby="profile-tab")
-                form(name="register-participant")
+                form#update-profile-form(name="update-profile")
                     div.form-group
                         label(for="fullName") Полное ФИО
                         input.form-control#fullName(type="text", name="fullName", value="#{user.postData.fullName}")
@@ -69,6 +69,10 @@ block content
                         label#reply
 
     script(type='text/javascript').
+        $("#update-profile-form").submit(function (e) {
+            e.preventDefault();
+        });
+
         $('#submit').click(function () {
             var data = {};
             data.fullName = $('#fullName').val();
