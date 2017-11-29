@@ -56,16 +56,20 @@ block content
 
             div.tab-pane.fade#profile(role="tabpanel" aria-labelledby="profile-tab")
                 form#update-profile-form(name="update-profile")
+                    div.row.form-group
+                        div.col-lg-8
+                            input.form-control#fullName(type="text", name="fullName", value="#{user.postData.fullName}", placeholder='Full name')
+                        div.col-lg-4
+                            div.input-group
+                                span.input-group-addon#login-symbol
+                                    | @
+                                input.form-control(type="text", placeholder="Telegram login" aria-label="Telegram login" aria-describedby="login-symbol")
+
                     div.form-group
-                        label(for="fullName") Полное ФИО
-                        input.form-control#fullName(type="text", name="fullName", value="#{user.postData.fullName}")
-                    div.form-group
-                        label(for="address") Адрес
-                        textarea.form-control#address(name="address", cols="40", rows="5")
+                        textarea.form-control#address(name="address", cols="40", rows="5", placeholder='Address: city, street, house, zip-code')
                             | #{user.postData.address}
                     div.form-group
-                        label(for="about") Расскажите о себе
-                        textarea.form-control#about(name="about", cols="40", rows="10")
+                        textarea.form-control#about(name="about", cols="40", rows="10", placeholder='About you')
                             | #{user.about}
                     div.form-group
                         button#submit.btn.btn-main
