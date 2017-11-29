@@ -20,8 +20,6 @@ block content
                         div.rounded.border.border-secondary.mt-3
                             div.event-header.p-3
                                 | #{event.name}
-                                span(style="float: right")
-                                    | #{event.membersCount} members
                             div.progress(style="height: 5px")
                                 div.progress-bar.bg-secondary(role="progressbar" style="width: #{event.completion}%" aria-valuenow="#{event.completion}" aria-valuemin="0" aria-valuemax="100")
                             div.event-content.p-3
@@ -56,9 +54,10 @@ block content
 
             div.tab-pane.fade#profile(role="tabpanel" aria-labelledby="profile-tab")
                 form#update-profile-form(name="update-profile")
-                    div.row.form-group
+                    div.row
                         div.col-lg-8
-                            input.form-control#fullName(type="text", name="fullName", value="#{user.postData.fullName}", placeholder='Full name')
+                            div.form-group
+                                input.form-control#fullName(type="text", name="fullName", value="#{user.postData.fullName}", placeholder='Full name')
                         div.col-lg-4
                             div.input-group
                                 span.input-group-addon#login-symbol
