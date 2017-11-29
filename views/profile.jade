@@ -59,10 +59,11 @@ block content
                             div.form-group
                                 input.form-control#fullName(type="text", name="fullName", value="#{user.postData.fullName}", placeholder='Full name')
                         div.col-lg-4
-                            div.input-group
-                                span.input-group-addon#login-symbol
-                                    | @
-                                input.form-control#telegramLogin(type="text", placeholder="Telegram login" aria-label="Telegram login" aria-describedby="login-symbol", value="#{user.telegramLogin}")
+                            div.form-group
+                                div.input-group
+                                    span.input-group-addon#login-symbol
+                                        | @
+                                    input.form-control#telegramLogin(type="text", placeholder="Telegram login" aria-label="Telegram login" aria-describedby="login-symbol", value="#{user.telegramLogin}")
 
                     div.form-group
                         textarea.form-control#address(name="address", cols="40", rows="5", placeholder='Address: city, street, house, zip-code')
