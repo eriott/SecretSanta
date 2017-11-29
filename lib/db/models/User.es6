@@ -16,5 +16,9 @@ let userSchema = mongoose.Schema({
     telegramLogin: {type: String, default: ""}
 });
 
+userSchema.methods.canUseInPair = function canUseInPair () {
+    return this.postData && this.postData.fullName !== '' && this.postData.address !== '';
+};
+
 // create the model for users and expose it to our app
 module.exports = mongoose.model('User', userSchema);
