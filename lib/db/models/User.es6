@@ -12,7 +12,8 @@ let userSchema = mongoose.Schema({
         fullName: {type: String, default: ""},
         address: {type: String, default: ""}
     },
-    about: {type: String, default: ""}
+    about: {type: String, default: ""},
+    telegramLogin: {type: String, default: ""}
 });
 
 // create the model for users and expose it to our app

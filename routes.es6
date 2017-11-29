@@ -24,6 +24,7 @@ module.exports = function (app, passport) {
         let params = req.body;
         user.postData.fullName = params.fullName;
         user.postData.address = params.address;
+        user.telegramLogin = params.telegramLogin;
         user.about = params.about;
 
         user.save((err, user) => {

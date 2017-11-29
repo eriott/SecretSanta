@@ -3,5 +3,6 @@ export default class Addressee {
         this.fullName = data.fullName;
         this.address = data.address;
         this.about = data.about;
+        this.telegramLogin = data.telegramLogin
     }
 }

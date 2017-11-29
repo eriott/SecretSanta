@@ -63,7 +63,7 @@ block content
                             div.input-group
                                 span.input-group-addon#login-symbol
                                     | @
-                                input.form-control(type="text", placeholder="Telegram login" aria-label="Telegram login" aria-describedby="login-symbol")
+                                input.form-control#telegramLogin(type="text", placeholder="Telegram login" aria-label="Telegram login" aria-describedby="login-symbol", value="#{user.telegramLogin}")
 
                     div.form-group
                         textarea.form-control#address(name="address", cols="40", rows="5", placeholder='Address: city, street, house, zip-code')
@@ -86,6 +86,7 @@ block content
             data.fullName = $('#fullName').val();
             data.address = $('#address').val();
             data.about = $('#about').val();
+            data.telegramLogin = $('#telegramLogin').val();
 
             $('#reply').css('opacity', '1').text("Сохраняю...");
             $.post('/update_profile', data, function (result) {
