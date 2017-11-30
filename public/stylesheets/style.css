@@ -1,3 +1,11 @@
+.postcard .row {
+    border-bottom: 1px solid;
+    border-color: #bdbdbd;
+    padding-bottom: 10px;
+    padding-top: 10px;
+    margin: 0;
+}
+
 .postcard-item-header {
     color: dimgray;
 }
@@ -55,4 +63,25 @@
 .badge {
     font-size: 12pt;
     margin-left: 10px;
+}
+
+.custom-control-input:checked~.custom-control-indicator {
+    color: #fff;
+    background-color: #e05271;
+    width: 20px;
+    height: 20px;
+}
+
+.custom-control-indicator {
+    width: 20px;
+    height: 20px;
+}
+
+.custom-control-description {
+    margin-top: .25rem;
+    margin-left: .25rem;
+}
+
+.actions {
+    margin-top: 15px;
 }

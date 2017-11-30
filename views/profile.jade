@@ -26,24 +26,39 @@ block content
                                 - if (event.addressee) {
                                     input.event-id(type="hidden" name="target" value="#{event.id}")
                                     div.postcard
-                                        p
-                                            span.postcard-item-header Кому
-                                            span.postcard-item #{event.addressee.fullName}
-                                        p
-                                            span.postcard-item-header Куда
-                                            span.postcard-item #{event.addressee.address}
-                                        p
-                                            span.postcard-item-header Об адресате
-                                            span.postcard-item #{event.addressee.about}
+                                        div.row
+                                            div.col-lg-3.postcard-item-header
+                                                | Telegram
+                                            div.col-lg-9
+                                                | @#{event.addressee.telegramLogin}
+                                        div.row
+                                            div.col-lg-3.postcard-item-header
+                                                | Full Name
+                                            div.col-lg-9
+                                                | #{event.addressee.fullName}
+                                        div.row
+                                            div.col-lg-3.postcard-item-header
+                                                | Address
+                                            div.col-lg-9
+                                                | #{event.addressee.address}
+                                        div.row
+                                            div.col-lg-3.postcard-item-header
+                                                | About
+                                            div.col-lg-9
+                                                | #{event.addressee.about}
                                     div.actions
                                         div.checkbox
-                                            label
-                                                input.isSent(type="checkbox", name="isSent", checked=(event.isGiftSent ? 'checked' : undefined))
-                                                | I sent the gift
+                                            label.isSent.custom-control.custom-checkbox
+                                                input.custom-control-input(type="checkbox", name="isSent", checked=(event.isGiftSent ? 'checked' : undefined))
+                                                span.custom-control-indicator
+                                                span.custom-control-description
+                                                    | I sent the gift
                                         div.checkbox
-                                            label
-                                                input.isReceived(type="checkbox", name="isReceived", checked=(event.isGiftReceived ? 'checked' : undefined))
-                                                | I received the gift
+                                            label.isReceived.custom-control.custom-checkbox
+                                                input.custom-control-input(type="checkbox", name="isSent", checked=(event.isGiftReceived ? 'checked' : undefined))
+                                                span.custom-control-indicator
+                                                span.custom-control-description
+                                                    | I received the gift
                                 - } else {
                                     div.empty-postcard
                                         p Nothing here yet!
@@ -104,16 +119,18 @@ block content
             })
         })
 
-        $('.isSent').change(function () {
+        $('.isSent').click(function () {
             var event = {};
+            var checkbox = $(this).find('input');
             event.id = $(this).parents('.event-content').find('.event-id').val();
-            event.isGiftSent = this.checked;
+            event.isGiftSent = checkbox.prop('checked');
             $.post('/update_event', event)
         })
 
-        $('.isReceived').change(function () {
+        $('.isReceived').click(function () {
             var event = {};
+            var checkbox = $(this).find('input');
             event.id = $(this).parents('.event-content').find('.event-id').val();
-            event.isGiftReceived = this.checked;
+            event.isGiftReceived = checkbox.prop('checked');
             $.post('/update_event', event)
         })
