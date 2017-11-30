@@ -73,7 +73,7 @@ block content
                             | #{user.about}
                     div.form-group
                         button#submit.btn.btn-main
-                            | Сохранить
+                            | Save
                         label#reply
 
     script(type='text/javascript').
@@ -88,9 +88,9 @@ block content
             data.about = $('#about').val();
             data.telegramLogin = $('#telegramLogin').val();
 
-            $('#reply').css('opacity', '1').text("Сохраняю...");
+            $('#reply').css('opacity', '1').text("Saving...");
             $.post('/update_profile', data, function (result) {
-                $('#reply').text("Сохранено.").delay(2000).animate({opacity:0});
+                $('#reply').text("Saved.").delay(2000).animate({opacity:0});
 
                 let badgeExists = $('#profile-tab').find('.badge').length > 0;
 

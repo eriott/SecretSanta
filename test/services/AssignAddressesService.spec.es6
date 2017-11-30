@@ -32,7 +32,7 @@ describe('AssignAddressesService', () => {
     });
 
     describe('#assign', () => {
-        it('create pair for all members of Event', done => {
+        it('creates pair for all members of Event', done => {
             service.assign()
                 .then(() => Event.find().populate('members'))
                 .then(([event]) => {
@@ -52,7 +52,7 @@ describe('AssignAddressesService', () => {
                 }).then(done, done);
         });
 
-        it('create pair with different from and to', done => {
+        it('creates pair with different from and to', done => {
             service.assign()
                 .then(() => Event.find())
                 .then(([event]) => {
@@ -64,7 +64,7 @@ describe('AssignAddressesService', () => {
                 }).then(done, done);
         });
 
-        it('dont create pair for users without fullName and address', done => {
+        it('doesnt create pair for users without fullName and address', done => {
             user1.postData.fullName = '';
             user3.postData.address = '';
 
@@ -81,6 +81,28 @@ describe('AssignAddressesService', () => {
 
                         expect(event.pairs.filter(pair => pair.to.equals(user1._id))).lengthOf(0);
                         expect(event.pairs.filter(pair => pair.to.equals(user3._id))).lengthOf(0);
+                    }).then(done, done);
+            });
+        });
+
+        it('creates pairs when event has odd number of members', done => {
+            User.remove({_id: user4._id}).then(() => {
+                service.assign()
+                    .then(() => Event.find())
+                    .then(([event]) => {
+                        expect(event).not.undefined;
+                        expect(event.pairs).not.undefined;
+                        expect(event.pairs).lengthOf(3);
+
+                        expect(event.pairs.filter(pair => pair.from.equals(user1._id))).lengthOf(1);
+                        expect(event.pairs.filter(pair => pair.from.equals(user2._id))).lengthOf(1);
+                        expect(event.pairs.filter(pair => pair.from.equals(user3._id))).lengthOf(1);
+
+                        expect(event.pairs.filter(pair => pair.to.equals(user1._id))).lengthOf(1);
+                        expect(event.pairs.filter(pair => pair.to.equals(user2._id))).lengthOf(1);
+                        expect(event.pairs.filter(pair => pair.to.equals(user3._id))).lengthOf(1);
+
+                        expect(event.pairs.filter(pair => pair.from.equals(pair.to))).lengthOf(0);
                     }).then(done, done);
             });
         });
