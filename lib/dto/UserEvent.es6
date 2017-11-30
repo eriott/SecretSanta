@@ -10,5 +10,6 @@ export default class UserEvent {
         this.isGiftReceived = data.isGiftReceived;
         this.membersCount = data.membersCount;
         this.completion = data.completion;
+        this.showGiftSentMessage = data.showGiftSentMessage
     }
 }

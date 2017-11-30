@@ -7,13 +7,17 @@ export default class UserEventService {
         return Event.find({members: user._id}).populate('members').then(events => {
             return events.map(event => {
                 let addressee;
-                let pair;
+                let myPair;
+                let showGiftSentMessage;
                 if (event.pairs) {
-                    pair = event.pairs.filter(pair => pair.from.equals(user._id))[0];
-                    if (pair && pair.to) {
-                        let targetUser = event.members.filter(member => member._id.equals(pair.to))[0];
+                    myPair = event.pairs.filter(pair => pair.from.equals(user._id))[0];
+                    if (myPair && myPair.to) {
+                        let targetUser = event.members.filter(member => member._id.equals(myPair.to))[0];
                         addressee = new Addressee(Object.assign(targetUser.toJSON().postData, targetUser.toJSON()))
                     }
+
+                    let toMePair = event.pairs.filter(pair => pair.to.equals(user._id))[0];
+                    showGiftSentMessage = toMePair && toMePair.isGiftSent;
                 }
 
                 let timeDiff = Math.abs(event.endDate.getTime() - event.startDate.getTime());
@@ -25,11 +29,12 @@ export default class UserEventService {
                     id: event.toJSON()._id,
                     user: user,
                     addressee: addressee,
-                    isGiftSent: pair ? pair.isGiftSent : undefined,
-                    isGiftReceived: pair ? pair.isGiftReceived : undefined,
+                    isGiftSent: myPair ? myPair.isGiftSent : undefined,
+                    isGiftReceived: myPair ? myPair.isGiftReceived : undefined,
                     endDate: event.endDate.toDateString(),
                     membersCount: event.members.length,
-                    completion: Math.round(daysGone / daysTotal * 100)
+                    completion: Math.round(daysGone / daysTotal * 100),
+                    showGiftSentMessage: showGiftSentMessage
                 }))
             })
         }).catch(err => {

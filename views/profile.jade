@@ -25,6 +25,13 @@ block content
                             div.event-content.p-3
                                 - if (event.addressee) {
                                     input.event-id(type="hidden" name="target" value="#{event.id}")
+                                    - if (event.showGiftSentMessage) {
+                                        div.gift-sended-message.alert.alert-info.fade.show(role="alert")
+                                            strong
+                                                | Hey!
+                                            |  Santa has sent gift to you!
+                                            img(src="/images/santa.png")
+                                     - }
                                     div.postcard
                                         div.row
                                             div.col-lg-3.postcard-item-header

@@ -85,3 +85,8 @@
 .actions {
     margin-top: 15px;
 }
+
+.gift-sended-message img {
+    width: 35px;
+    margin-left: 5px;
+}
