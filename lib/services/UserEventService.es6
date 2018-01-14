@@ -8,16 +8,20 @@ export default class UserEventService {
             return events.map(event => {
                 let addressee;
                 let myPair;
-                let showGiftSentMessage;
+                let showGiftSentMessage, showGiftReceivedMessage;
                 if (event.pairs) {
-                    myPair = event.pairs.filter(pair => pair.from.equals(user._id))[0];
+                    myPair = event.pairs.filter(pair => pair.from.equals(user._id))[0]; // from me pair
                     if (myPair && myPair.to) {
                         let targetUser = event.members.filter(member => member._id.equals(myPair.to))[0];
-                        addressee = new Addressee(Object.assign(targetUser.toJSON().postData, targetUser.toJSON()))
+                        addressee = new Addressee(Object.assign(targetUser.toJSON().postData, targetUser.toJSON()));
+
+                        let myAddresseePair = event.pairs.filter(pair => pair.from.equals(targetUser._id))[0];
+                        showGiftReceivedMessage = myAddresseePair && myAddresseePair.isGiftReceived;
                     }
 
                     let toMePair = event.pairs.filter(pair => pair.to.equals(user._id))[0];
                     showGiftSentMessage = toMePair && toMePair.isGiftSent;
+
                 }
 
                 let timeDiff = Math.abs(event.endDate.getTime() - event.startDate.getTime());
@@ -34,7 +38,8 @@ export default class UserEventService {
                     endDate: event.endDate.toDateString(),
                     membersCount: event.members.length,
                     completion: Math.round(daysGone / daysTotal * 100),
-                    showGiftSentMessage: showGiftSentMessage
+                    showGiftSentMessage: showGiftSentMessage,
+                    showGiftReceivedMessage: showGiftReceivedMessage
                 }))
             })
         }).catch(err => {

@@ -32,6 +32,13 @@ block content
                                             |  Santa has sent gift to you!
                                             img(src="/images/santa.png")
                                      - }
+                                    - if (event.showGiftReceivedMessage) {
+                                        div.gift-received-message.alert.alert-info.fade.show(role="alert")
+                                            strong
+                                                | Hey!
+                                            |  Your gift was received!
+                                            img(src="/images/gift.png")
+                                     - }
                                     div.postcard
                                         div.row
                                             div.col-lg-3.postcard-item-header
