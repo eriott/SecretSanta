@@ -1,11 +1,16 @@
 import UserEventService from './lib/services/UserEventService'
 import AssignAddressesService from './lib/services/AssignAddressesService'
 import UserEvent from './lib/dto/UserEvent'
+import React from 'react';
+import ReactDOMServer from 'react-dom/server';
+import GuestPage from "./components/GuestPage";
 
 module.exports = function (app, passport) {
     // route for home page
     app.get('/', function (req, res) {
-        res.render('index'); // load the index.ejs file
+        //res.render('index'); // load the index.ejs file
+        let html = ReactDOMServer.renderToString(React.createElement(GuestPage));
+        res.send(html);
     });
 
     app.get('/profile', isLoggedIn, function (req, res) {
