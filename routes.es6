@@ -16,7 +16,7 @@ module.exports = function (app, passport) {
 
     app.get('/profile', isLoggedIn, function (req, res) {
         new UserEventService().getByUser(req.user).then(events => {
-            let html = ReactDOMServer.renderToString(React.createElement(Profile, {user: req.user, events: events}));
+            let html = ReactDOMServer.renderToString(React.createElement(Profile, {user: req.user.toJSON(), events: events}));
             res.send(html);
         });
     });

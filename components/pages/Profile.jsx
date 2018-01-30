@@ -1,23 +1,7 @@
 import React from 'react'
 import App from '../App.jsx'
 import Event from "../Event";
-
-// export default class Profile extends React.Component {
-//     render() {
-//         return (
-//             <div>
-//                 <h2>{this.props.user.telegramLogin}</h2>
-//                 {
-//                     (() => {
-//                         // if (this.props.user.postData.fullName === "" || this.props.user.postData.address === "") {
-//                         return <span class='badge badge-warning'>!</span>
-//                         // }
-//                     })()
-//                 }
-//             </div>
-//         )
-//     }
-// }
+import ProfileForm from "../ProfileForm";
 
 export default class Profile extends React.Component {
     render() {
@@ -50,7 +34,7 @@ export default class Profile extends React.Component {
                         </div>
                         <div id='profile' className='tab-pane fade' role='tabpanel'
                              aria-labelledby='profile-tab'>
-                            <p>PIU</p>
+                            <ProfileForm {... this.props.user}/>
                         </div>
                     </div>
                 </div>

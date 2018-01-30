@@ -3,19 +3,21 @@ import React from 'react'
 export default class ProfileForm extends React.Component {
     render() {
         return (
-            <form classID='update-profile-form' name='update-profile'>
+            <form id='update-profile-form' name='update-profile'>
                 <div className='row'>
                     <div className='col-lg-8'>
                         <div className='form-group'>
-                            <input classID='fullName' className='.form-control' type='text' name='fullName' value=''
+                            <input id='fullName' className='form-control' type='text' name='fullName'
+                                   value={this.props.postData.fullName}
                                    placeholder='Full name'/>
                         </div>
                     </div>
                     <div className='col-lg-4'>
                         <div className='form-group'>
                             <div className='input-group'>
-                                <span classID='login-symbol' className='.input-group-addon'>@</span>
-                                <input classID='telegramLogin' className='.form-control' type='text' value=''
+                                <span id='login-symbol' className='input-group-addon'>@</span>
+                                <input id='telegramLogin' className='form-control' type='text'
+                                       value={this.props.telegramLogin}
                                        placeholder='Telegram login' aria-label='Telegram login'
                                        aria-describedby='login-symbol'/>
                             </div>
@@ -23,22 +25,20 @@ export default class ProfileForm extends React.Component {
                     </div>
                 </div>
                 <div className='form-group'>
-                    <div className='input-group'>
-                            <textarea classID='address' className='.form-control'
+                    <textarea id='address' className='form-control'
                                       placeholder='Address: city, street, house, zip-code' cols='40' rows='5'>
-                            </textarea>
-                    </div>
+                        {this.props.postData.address}
+                    </textarea>
                 </div>
                 <div className='form-group'>
-                    <div className='input-group'>
-                            <textarea classID='about' className='.form-control' placeholder='About you' cols='40'
+                    <textarea id='about' className='form-control' placeholder='About you' cols='40'
                                       rows='10'>
-                            </textarea>
-                    </div>
+                        {this.props.about}
+                    </textarea>
                 </div>
                 <div className='form-group'>
-                    <button classID='submit' className='btn btn-main'>Save</button>
-                    <label classID='reply'/>
+                    <button id='submit' className='btn btn-main'>Save</button>
+                    <label id='reply'/>
                 </div>
             </form>
         );
