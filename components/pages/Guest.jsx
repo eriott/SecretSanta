@@ -1,8 +1,8 @@
 import React from 'react'
-import App from "./App.jsx";
-import GoogleSignInButton from "./GoogleSignInButton.jsx";
+import App from "../App.jsx";
+import GoogleSignInButton from "../GoogleSignInButton.jsx";
 
-export default class GuestPage extends React.Component {
+export default class Guest extends React.Component {
     render() {
         return (
             <App>

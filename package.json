@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "start": "webpack && ./node_modules/.bin/babel-node ./bin/www.es6",
+    "start": "webpack && NODE_ENV=local;GOOGLE_CLIENT_SECRET=lMLn05lgr7ZTSCv2ByZ5156c ./node_modules/.bin/babel-node ./bin/www.es6",
     "test": "mocha --compilers es6:babel-register"
   },
   "dependencies": {
@@ -27,6 +27,8 @@
     "passport-google-oauth": "~0.1.5",
     "react": "^16.2.0",
     "react-dom": "^16.2.0",
+    "react-router": "^4.2.0",
+    "react-router-dom": "^4.2.2",
     "serve-favicon": "~2.4.5",
     "webpack": "^3.10.0"
   },

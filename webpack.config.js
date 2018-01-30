@@ -1,7 +1,7 @@
 var path = require('path');
 
 module.exports = {
-    entry: './client/client.es6',
+    entry: './client/client.jsx',
     output: {
         filename: 'bundle.js',
         path: path.join(__dirname, 'public/javascripts')

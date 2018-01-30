@@ -3,25 +3,33 @@ import AssignAddressesService from './lib/services/AssignAddressesService'
 import UserEvent from './lib/dto/UserEvent'
 import React from 'react';
 import ReactDOMServer from 'react-dom/server';
-import GuestPage from "./components/GuestPage";
+import Guest from "./components/pages/Guest";
+import Profile from "./components/pages/Profile";
 
 module.exports = function (app, passport) {
     // route for home page
     app.get('/', function (req, res) {
         //res.render('index'); // load the index.ejs file
-        let html = ReactDOMServer.renderToString(React.createElement(GuestPage));
+        let html = ReactDOMServer.renderToString(React.createElement(Guest));
         res.send(html);
     });
 
     app.get('/profile', isLoggedIn, function (req, res) {
         new UserEventService().getByUser(req.user).then(events => {
-            res.render('profile', {
-                user: req.user, // get the user out of session and pass to template
-                events: events,
-                target: {}
-            });
+            let html = ReactDOMServer.renderToString(React.createElement(Profile, {user: req.user, events: events}));
+            res.send(html);
         });
     });
+
+    // app.get('/profile', isLoggedIn, function (req, res) {
+    //     new UserEventService().getByUser(req.user).then(events => {
+    //         res.render('profile', {
+    //             user: req.user, // get the user out of session and pass to template
+    //             events: events,
+    //             target: {}
+    //         });
+    //     });
+    // });
 
     app.post('/update_profile', isLoggedIn, function (req, res) {
         // update user data
