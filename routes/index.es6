@@ -4,7 +4,7 @@
 // let router = express.Router();
 // let passport = require('passport');
 //
-// // /* GET home page. */
+// // /* GET home page. */N
 // // router.get('/', function(req, res, next) {
 // //   res.render('index', { title: 'Express' });
 // // });

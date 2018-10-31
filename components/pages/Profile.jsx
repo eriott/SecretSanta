@@ -1,48 +1,50 @@
 import React from 'react'
-import App from '../App.jsx'
 import Event from "../Event";
 import ProfileForm from "../ProfileForm";
 
+
 export default class Profile extends React.Component {
-    render() {
-        return (
-            <App>
-                <div className='container'>
-                    <ul id='myTab' className='nav nav-pills' role='tabList'>
-                        <li className='nav-item'>
-                            <a id='home-tab' className='nav-link active' data-toggle='tab' href='#home' role='tab'
-                               aria-controls='home' aria-selected='true'>
-                                Activities
-                            </a>
-                        </li>
-                        <li className='nav-item'>
-                            <a id='profile-tab' className='nav-link' data-toggle='tab' href='#profile' role='tab'
-                               aria-controls='profile' aria-selected='false'>
-                                My profile
-                                {(() => {
-                                    if (this.props.user.postData.fullName === "" || this.props.user.postData.address === "") {
-                                        return <span class='badge badge-warning'>!</span>
-                                    }
-                                })()}
-                            </a>
-                        </li>
-                    </ul>
-                    <div id='myTabContent' className='tab-content mt-3'>
-                        <div id='home' className='tab-pane fade show active' role='tabpanel'
-                             aria-labelledby='home-tab'>
-                            {this.props.events.map(event => <Event {... event}/>)}
-                        </div>
-                        <div id='profile' className='tab-pane fade' role='tabpanel'
-                             aria-labelledby='profile-tab'>
-                            <ProfileForm {... this.props.user}/>
-                        </div>
-                    </div>
-                </div>
-            </App>
-        );
-    }
+  render() {
+    return (
+      <div className='container'>
+        <ul id='myTab' className='nav nav-pills' role='tabList'>
+          <li className='nav-item'>
+            <a id='home-tab' className='nav-link active' data-toggle='tab' href='#home' role='tab'
+               aria-controls='home' aria-selected='true'>
+              Activities
+            </a>
+          </li>
+          <li className='nav-item'>
+            <a id='profile-tab' className='nav-link' data-toggle='tab' href='#profile' role='tab'
+               aria-controls='profile' aria-selected='false'>
+              My profile
+              {(() => {
+                // if (this.props.user.postData.fullName === "" || this.props.user.postData.address === "") {
+                //     return <span class='badge badge-warning'>!</span>
+                // }
+                if (this.props.show) {
+                  return <span class='badge badge-warning'>!</span>
+                }
+              })()}
+            </a>
+          </li>
+        </ul>
+        <div id='myTabContent' className='tab-content mt-3'>
+          <div id='home' className='tab-pane fade show active' role='tabpanel'
+               aria-labelledby='home-tab'>
+            {this.props.events.map(event => <Event {...event}/>)}
+          </div>
+          <div id='profile' className='tab-pane fade' role='tabpanel'
+               aria-labelledby='profile-tab'>
+            <ProfileForm {...this.props.user}/>
+          </div>
+        </div>
+      </div>
+    );
+  }
 }
 
+// export default connect(state => state)(Profile)
 /*
 extends layout
 

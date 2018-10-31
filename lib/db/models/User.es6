@@ -1,4 +1,4 @@
-import mongoose from '../mongoose';
+import mongoose from '../mongoose.es6';
 
 // define the schema for our user model
 let userSchema = mongoose.Schema({

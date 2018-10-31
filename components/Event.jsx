@@ -5,6 +5,7 @@ import EmptyPostcard from "./EmptyPostcard";
 import CheckBox from "./CheckBox";
 
 export default class Event extends React.Component {
+
     render() {
         return (
             <div className='rounded border border-secondary mt-3' key={this.props.name}>
