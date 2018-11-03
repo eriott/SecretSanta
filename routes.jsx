@@ -3,12 +3,15 @@ import Guest from "./components/pages/Guest";
 import Profile from "./components/pages/Profile";
 
 import {Route, Switch} from 'react-router';
+import App from "./components/App";
 
 export default (
-  <Switch>
-    <Route component={Guest} exact path='/'/>
-    <Route component={Profile} path='/profile'/>
-  </Switch>
+  <App>
+    <Switch>
+      <Route component={Profile} exact path='/'/>
+      <Route component={Guest} path='/login'/>
+    </Switch>
+  </App>
 );
 
 // module.exports = function (app, passport) {

@@ -1,6 +1,11 @@
 import React from 'react'
+import PropTypes from 'prop-types';
 
-export default class App extends React.Component {
+const propTypes = {
+  children: PropTypes.node
+};
+
+class App extends React.Component {
   render() {
     return (
       <div>
@@ -22,3 +27,7 @@ class Header extends React.Component {
     );
   }
 }
+
+App.propTypes = propTypes;
+
+export default App;

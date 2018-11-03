@@ -1,9 +1,15 @@
 import React from 'react'
 import Event from "../Event";
 import ProfileForm from "../ProfileForm";
+import PropTypes from 'prop-types';
+import {connect} from "react-redux";
 
+const propTypes = {
+  user: PropTypes.object.isRequired,
+  events: PropTypes.array.isRequired
+};
 
-export default class Profile extends React.Component {
+class Profile extends React.Component {
   render() {
     return (
       <div className='container'>
@@ -22,9 +28,9 @@ export default class Profile extends React.Component {
                 // if (this.props.user.postData.fullName === "" || this.props.user.postData.address === "") {
                 //     return <span class='badge badge-warning'>!</span>
                 // }
-                if (this.props.show) {
-                  return <span class='badge badge-warning'>!</span>
-                }
+                // if (this.props.show) {
+                //   return <span class='badge badge-warning'>!</span>
+                // }
               })()}
             </a>
           </li>
@@ -43,6 +49,17 @@ export default class Profile extends React.Component {
     );
   }
 }
+
+Profile.propTypes = propTypes;
+
+function mapStateToProps(state) {
+  return {
+    events: state.profile.events,
+    user: state.auth.user
+  };
+}
+
+export default connect(mapStateToProps)(Profile);
 
 // export default connect(state => state)(Profile)
 /*

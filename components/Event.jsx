@@ -32,7 +32,7 @@ export default class Event extends React.Component {
                             </div>);
                             return (<div>{res}</div>);
                         } else {
-                            return <EmptyPostcard assignDate={this.props.endDate}/>;
+                            return <EmptyPostcard assignDate={this.props.endDate.toDateString()}/>;
                         }
                     })()}
                 </div>

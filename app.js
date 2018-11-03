@@ -1,9 +1,12 @@
-import {StaticRouter} from 'react-router';
+import {Route, StaticRouter, Switch} from 'react-router';
 import configureStore from "./client/redux/configureStore";
 import ReactDom from 'react-dom/server';
 import React from 'react';
 import {Provider} from 'react-redux';
 import App from "./components/App";
+import Guest from "./components/pages/Guest";
+import Profile from "./components/pages/Profile";
+import routes from './routes'
 
 var express = require('express');
 var path = require('path');
@@ -13,7 +16,6 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var passport = require('passport');
 var session = require('express-session');
-var routes = require('./routes');
 
 
 var app = express();
@@ -43,9 +45,7 @@ app.use((req, res) => {
     html = ReactDom.renderToString(
       <Provider store={store}>
         <StaticRouter location={req.url} context={context}>
-          <App>
             {routes}
-          </App>
         </StaticRouter>
       </Provider>
     );
