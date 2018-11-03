@@ -1,0 +1,13 @@
+.bg-main {
+    background-color: #17a2b8 !important;
+}
+
+.bg-secondary {
+    background-color: #e05271 !important;
+}
+
+.btn-main {
+    color: #fff;
+    background-color: #17a2b8;
+    border-color: #17a2b8;
+}

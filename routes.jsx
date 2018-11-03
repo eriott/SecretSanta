@@ -1,9 +1,9 @@
 import React from 'react';
-import Guest from "./components/pages/Guest";
-import Profile from "./components/pages/Profile";
+import Guest from "./components/GuestPage/Guest";
+import Profile from "./components/ProfilePage/Profile";
 
 import {Route, Switch} from 'react-router';
-import App from "./components/App";
+import App from "./components/App/App";
 
 export default (
   <App>

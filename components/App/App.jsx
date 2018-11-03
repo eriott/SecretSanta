@@ -1,5 +1,8 @@
 import React from 'react'
 import PropTypes from 'prop-types';
+import {Grid} from "react-bootstrap";
+
+import './App.css';
 
 const propTypes = {
   children: PropTypes.node
@@ -10,7 +13,9 @@ class App extends React.Component {
     return (
       <div>
         <Header/>
-        {this.props.children}
+        <Grid>
+          {this.props.children}
+        </Grid>
       </div>
     );
   }

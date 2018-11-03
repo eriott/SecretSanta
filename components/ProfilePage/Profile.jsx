@@ -1,8 +1,10 @@
 import React from 'react'
-import Event from "../Event";
-import ProfileForm from "../ProfileForm";
+import Event from "../Event/Event";
+import ProfileForm from "../ProfileForm/ProfileForm";
 import PropTypes from 'prop-types';
 import {connect} from "react-redux";
+
+import './Profile.css'
 
 const propTypes = {
   user: PropTypes.object.isRequired,

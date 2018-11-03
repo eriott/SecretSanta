@@ -1,8 +1,10 @@
 import React from 'react'
-import Message from "./Message";
-import Postcard from "./Postcard";
-import EmptyPostcard from "./EmptyPostcard";
-import CheckBox from "./CheckBox";
+import Message from "../Message/Message";
+import Postcard from "../Postcard/Postcard";
+import EmptyPostcard from "../EmptyPostcard/EmptyPostcard";
+import CheckBox from "../Checkbox/CheckBox";
+
+import './Event.css';
 
 export default class Event extends React.Component {
 

@@ -1,0 +1,13 @@
+.nav-pills .nav-link.active, .nav-pills .show > .nav-link {
+    color: #fff;
+    background-color: #17a2b8 !important;
+}
+
+.nav li a {
+    color: #676767;
+}
+
+.badge {
+    font-size: 12pt;
+    margin-left: 10px;
+}

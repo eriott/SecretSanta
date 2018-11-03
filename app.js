@@ -3,9 +3,9 @@ import configureStore from "./client/redux/configureStore";
 import ReactDom from 'react-dom/server';
 import React from 'react';
 import {Provider} from 'react-redux';
-import App from "./components/App";
-import Guest from "./components/pages/Guest";
-import Profile from "./components/pages/Profile";
+import App from "./components/App/App";
+import Guest from "./components/GuestPage/Guest";
+import Profile from "./components/ProfilePage/Profile";
 import routes from './routes'
 
 var express = require('express');
@@ -73,14 +73,14 @@ function renderHTML(componentHTML, initialState) {
                 window.REDUX_INITIAL_STATE = ${JSON.stringify(initialState)};
           </script>
           <link rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css' integrity='sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb' crossOrigin='anonymous'/>
-          <link rel='stylesheet' href='/stylesheets/style.css'/>
+          <link rel='stylesheet' href='/styles.css'/>
           <script type="application/javascript" src='/javascripts/jquery-3.2.1.min.js'></script>
           <script type="application/javascript" src='https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js' integrity='sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh' crossOrigin='anonymous'></script>
           <script type="application/javascript" src='https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js' integrity='sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ' crossOrigin='anonymous'></script>
       </head>
       <body>
         <div id="react-view">${componentHTML}</div>
-        <script type="application/javascript" src="/javascripts/bundle.js"></script>
+        <script type="application/javascript" src="/bundle.js"></script>
       </body>
     </html>
   `;

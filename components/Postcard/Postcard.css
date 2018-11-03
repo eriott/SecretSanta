@@ -1,0 +1,19 @@
+.postcard .row {
+    border-bottom: 1px solid;
+    border-color: #bdbdbd;
+    padding-bottom: 10px;
+    padding-top: 10px;
+    margin: 0;
+}
+
+.postcard-item-header {
+    color: dimgray;
+}
+
+.postcard-item {
+    color: #252525;
+    padding-bottom: 3px;
+    margin-left: 10px;
+    border-bottom: 1px dashed;
+    border-color: dimgray;
+}

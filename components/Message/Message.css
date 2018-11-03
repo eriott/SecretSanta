@@ -1,0 +1,10 @@
+.gift-sended-message img {
+    width: 35px;
+    margin-left: 5px;
+}
+
+.gift-received-message img {
+    width: 30px;
+    margin-bottom: 5px;
+    margin-left: 7px;
+}

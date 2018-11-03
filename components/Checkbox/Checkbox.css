@@ -1,0 +1,16 @@
+.custom-control-input:checked~.custom-control-indicator {
+    color: #fff;
+    background-color: #e05271;
+    width: 20px;
+    height: 20px;
+}
+
+.custom-control-indicator {
+    width: 20px;
+    height: 20px;
+}
+
+.custom-control-description {
+    margin-top: .25rem;
+    margin-left: .25rem;
+}

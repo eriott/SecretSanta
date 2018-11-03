@@ -1,5 +1,7 @@
 import React from 'react'
 
+import './Postcard.css'
+
 export default class Postcard extends React.Component {
     render() {
         return (
