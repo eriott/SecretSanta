@@ -1,29 +1,21 @@
-const event = {
-  uid: 'codegirls18',
-  name: "Codegirls Secret Santa 2018",
-  addressee: {
-    fullName: 'Настя Иванова',
-    address: 'г. Владивосток, ул. Круглая, д. 5, кв. 17',
-    about: 'Люблю наклейки',
-    telegramLogin: 'nastya'
+const user = {
+  "about": "Proin sed lectus hendrerit, convallis risus id, lobortis est. Nunc urna dui, luctus elementum ligula quis, pellentesque faucibus ligula. Proin rhoncus massa et sem lacinia pellentesque. Cras luctus, mauris sed varius egestas, tortor ipsum condimentum augue, eget accumsan justo risus ut nisi. ",
+  "postData": {
+    "address": "Россия, г. Волгоград, ул. Ленина 2а, кв. 21",
+    "fullName": "Петрова Анастасия Анатольевна"
   },
-  isGiftSent: true,
-  isGiftReceived: false,
-  endDate: new Date(),
-  membersCount: 12,
-  completion: 70,
-  showGiftSentMessage: true,
-  showGiftReceivedMessage: true
+  "google": {
+    "id": "123",
+    "token": "google token",
+    "name": "Петрова Анастасия",
+    "email": "garaeva.regina9@gmail.com"
+  },
+  "telegramLogin": "nastya"
 };
 
 const initialState = {
-  show: false, events: [{
-    uid: 'codegirls17',
-    name: "Codegirls Secret Santa 2017",
-    startDate: new Date(2017, 10, 27),
-    endDate: new Date(2017, 11, 4),
-    members: []
-  }, event]
+  show: false,
+  user: user
 };
 
 export default function (state = initialState, action) {

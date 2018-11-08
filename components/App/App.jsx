@@ -1,6 +1,5 @@
 import React from 'react'
 import PropTypes from 'prop-types';
-import {Grid} from "react-bootstrap";
 
 import './App.css';
 
@@ -13,9 +12,9 @@ class App extends React.Component {
     return (
       <div>
         <Header/>
-        <Grid>
+        <div className='container'>
           {this.props.children}
-        </Grid>
+        </div>
       </div>
     );
   }

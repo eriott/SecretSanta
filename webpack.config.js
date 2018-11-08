@@ -1,9 +1,17 @@
 var path = require('path');
+var webpack = require('webpack');
 var MiniCssExtractPlugin = require('mini-css-extract-plugin');
-var plugins = [new MiniCssExtractPlugin({
-  filename: 'styles.css',
-  chunkFilename: '[id].css'
-})];
+var plugins = [
+  new webpack.DefinePlugin({
+    'process.env': {
+      BROWSER: JSON.stringify(true),
+      NODE_ENV: JSON.stringify(process.env.NODE_ENV || 'local')
+    }
+  }),
+  new MiniCssExtractPlugin({
+    filename: 'styles.css',
+    chunkFilename: '[id].css'
+  })];
 
 module.exports = {
   entry: ['babel-polyfill', './client/client.jsx'],

@@ -4,11 +4,12 @@ import Profile from "./components/ProfilePage/Profile";
 
 import {Route, Switch} from 'react-router';
 import App from "./components/App/App";
+import PrivateRoute from "./components/PrivateRoute";
 
 export default (
   <App>
     <Switch>
-      <Route component={Profile} exact path='/'/>
+      <PrivateRoute component={Profile} exact path='/'/>
       <Route component={Guest} path='/login'/>
     </Switch>
   </App>

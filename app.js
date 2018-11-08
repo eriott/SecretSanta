@@ -1,12 +1,11 @@
-import {Route, StaticRouter, Switch} from 'react-router';
+import {StaticRouter} from 'react-router';
 import configureStore from "./client/redux/configureStore";
 import ReactDom from 'react-dom/server';
 import React from 'react';
 import {Provider} from 'react-redux';
-import App from "./components/App/App";
-import Guest from "./components/GuestPage/Guest";
-import Profile from "./components/ProfilePage/Profile";
 import routes from './routes'
+import User from './lib/db/models/User';
+import GoogleJWTVerifier from "./lib/services/auth/GoogleJWTVerifier";
 
 var express = require('express');
 var path = require('path');
@@ -14,7 +13,6 @@ var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
-var passport = require('passport');
 var session = require('express-session');
 
 
@@ -29,14 +27,36 @@ app.set('view engine', 'jade');
 app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: false}));
-app.use(cookieParser());
+app.use(cookieParser('FfgjkdgRFdsfadfI$'));
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(session({secret: 'ilovescotchscotchyscotchscotch'})); // session secret
-// app.use(passport.initialize());
-// app.use(passport.session()); // persistent login sessions
+
+app.post('/auth/google', async (req, res) => {
+  try {
+    const payload = await new GoogleJWTVerifier().verify(req.body.idToken);
+    const userId = payload['sub'];
+    setCookie(res, {token: 'google token'});
+    res.sendStatus(200);
+  } catch (err) {
+    console.error(err);
+  }
+});
+
+app.post('/exchanges', authMiddleware(), (req, res) => {
+  res.send(req.body);
+  // let exchange = new UserEvent(Object.assign({}, req.body, {user: req.user}));
+  // new UserEventService().save(exchange)
+  //   .then(saved => res.send(saved))
+  //   .catch(err => res.sendStatus(500));
+});
 
 app.use((req, res) => {
-  // This context object contains the results of the render
+  const cookies = req.signedCookies;
+  console.debug('SERVER SIGNED COOKIES', cookies);
+  const token = cookies && cookies['auth-token'] ? cookies['auth-token'] : undefined;
+  const initialState = token ? {auth: {token: token}} : {};
+  console.debug('SERVER INITIAL STATE', initialState);
+
   const context = {};
   const store = configureStore();
 
@@ -45,7 +65,7 @@ app.use((req, res) => {
     html = ReactDom.renderToString(
       <Provider store={store}>
         <StaticRouter location={req.url} context={context}>
-            {routes}
+          {routes}
         </StaticRouter>
       </Provider>
     );
@@ -72,11 +92,13 @@ function renderHTML(componentHTML, initialState) {
           <script type="application/javascript">
                 window.REDUX_INITIAL_STATE = ${JSON.stringify(initialState)};
           </script>
-          <link rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css' integrity='sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb' crossOrigin='anonymous'/>
+          <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.8.0/css/bootstrap-datepicker.css">
+          <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
           <link rel='stylesheet' href='/styles.css'/>
-          <script type="application/javascript" src='/javascripts/jquery-3.2.1.min.js'></script>
-          <script type="application/javascript" src='https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js' integrity='sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh' crossOrigin='anonymous'></script>
-          <script type="application/javascript" src='https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js' integrity='sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ' crossOrigin='anonymous'></script>
+          <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+          <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+          <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+          <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.8.0/js/bootstrap-datepicker.js"></script>
       </head>
       <body>
         <div id="react-view">${componentHTML}</div>
@@ -85,38 +107,6 @@ function renderHTML(componentHTML, initialState) {
     </html>
   `;
 }
-
-// app.use((req, res) => {
-//     const store = configureStore();
-//
-//     match({ routes, location: req.url }, (error, redirectLocation, renderProps) => {
-//         if (redirectLocation) { // Если необходимо сделать redirect
-//             return res.redirect(301, redirectLocation.pathname + redirectLocation.search);
-//         }
-//
-//         if (error) { // Произошла ошибка любого рода
-//             return res.status(500).send(error.message);
-//         }
-//
-//         if (!renderProps) { // мы не определили путь, который бы подошел для URL
-//             return res.status(404).send('Not found');
-//         }
-//
-//         const componentHTML = ReactDom.renderToString(
-//             <Provider store={store}>
-//                 <RouterContext {...renderProps} />
-//             </Provider>
-//         );
-//
-//         return res.end(renderHTML(componentHTML));
-//     });
-// });
-
-//require('./lib/auth/passport')(passport); // pass passport for configuration
-//require('./routes.jsx')(app, passport); // load our routes and pass in our app and fully configured passport
-//
-// app.use('/', index);
-// app.use('/users', users);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
@@ -135,5 +125,36 @@ app.use(function (err, req, res, next) {
   res.status(err.status || 500);
   res.render('error');
 });
+
+const TOKEN_COOKIE = 'auth-token';
+
+function authMiddleware() {
+  console.log('authMiddleware');
+  return function (req, res, next) {
+    let token = req.get('Authorization');
+    console.log('TOKEN', token);
+    if (!Boolean(token)) {
+      res.sendStatus(401);
+    } else {
+      User.findOne({'google.token': token}).then(user => {
+        if (Boolean(user)) {
+          setCookie(res, {token: token});
+          req.user = user;
+          next();
+        } else {
+          res.clearCookie(TOKEN_COOKIE);
+          res.sendStatus(403);
+        }
+      });
+    }
+  }
+}
+
+function setCookie(res, data) {
+  const WEEK = 7 * 24 * 60 * 60 * 1000;
+  let date = new Date();
+  date.setTime(date.getTime() + WEEK);
+  res.cookie(TOKEN_COOKIE, data.token, {expires: date, secure: true, httpOnly: true, signed: true});
+}
 
 module.exports = app;
