@@ -5,6 +5,8 @@ import PropTypes from 'prop-types';
 import {connect} from "react-redux";
 
 import './Profile.css'
+import Modal from "../Modal/Modal";
+import EditExchangeForm from "../EditExchangeForm/EditExchangeForm";
 
 const propTypes = {
   user: PropTypes.object.isRequired,
@@ -13,30 +15,40 @@ const propTypes = {
 
 class Profile extends React.Component {
   render() {
+
+    console.log('STATE', this.props);
+
     return (
-      <div className='container'>
-        <ul id='myTab' className='nav nav-pills' role='tabList'>
-          <li className='nav-item'>
-            <a id='home-tab' className='nav-link active' data-toggle='tab' href='#home' role='tab'
-               aria-controls='home' aria-selected='true'>
-              Activities
-            </a>
-          </li>
-          <li className='nav-item'>
-            <a id='profile-tab' className='nav-link' data-toggle='tab' href='#profile' role='tab'
-               aria-controls='profile' aria-selected='false'>
-              My profile
-              {(() => {
-                // if (this.props.user.postData.fullName === "" || this.props.user.postData.address === "") {
-                //     return <span class='badge badge-warning'>!</span>
-                // }
-                // if (this.props.show) {
-                //   return <span class='badge badge-warning'>!</span>
-                // }
-              })()}
-            </a>
-          </li>
-        </ul>
+      <div>
+        <div className='row'>
+          <div className='col-10'>
+            <ul id='myTab' className='nav nav-pills' role='tabList'>
+              <li className='nav-item'>
+                <a id='home-tab' className='nav-link active' data-toggle='tab' href='#home' role='tab'
+                   aria-controls='home' aria-selected='true'>
+                  Exchanges
+                </a>
+              </li>
+              <li className='nav-item'>
+                <a id='profile-tab' className='nav-link' data-toggle='tab' href='#profile' role='tab'
+                   aria-controls='profile' aria-selected='false'>
+                  My profile
+                  {(() => {
+                    // if (this.props.user.postData.fullName === "" || this.props.user.postData.address === "") {
+                    //     return <span class='badge badge-warning'>!</span>
+                    // }
+                    // if (this.props.show) {
+                    //   return <span class='badge badge-warning'>!</span>
+                    // }
+                  })()}
+                </a>
+              </li>
+            </ul>
+          </div>
+          <div className='col-2'>
+            <a id='addExchange' data-toggle="modal" data-target="#editExchangeModal">Start new exchange</a>
+          </div>
+        </div>
         <div id='myTabContent' className='tab-content mt-3'>
           <div id='home' className='tab-pane fade show active' role='tabpanel'
                aria-labelledby='home-tab'>
@@ -47,6 +59,10 @@ class Profile extends React.Component {
             <ProfileForm {...this.props.user}/>
           </div>
         </div>
+        <Modal id='editExchangeModal' title='Start exchange'>
+          <EditExchangeForm>
+          </EditExchangeForm>
+        </Modal>
       </div>
     );
   }
@@ -56,8 +72,8 @@ Profile.propTypes = propTypes;
 
 function mapStateToProps(state) {
   return {
-    events: state.profile.events,
-    user: state.auth.user
+    events: state.exchanges.items,
+    user: state.profile.user
   };
 }
 
