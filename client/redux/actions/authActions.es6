@@ -1,4 +1,4 @@
-import axios from 'axios';
+import {post} from "../../../lib/services/RequestAdapter";
 
 export const AUTH_BEGIN = 'AUTH_BEGIN';
 export const AUTH_SUCCESS = 'AUTH_SUCCESS';
@@ -19,16 +19,8 @@ export function authFailure(error) {
 export function authorization(data) {
   return (dispatch) => {
     dispatch(authBegin());
-    axios.post('/auth/google', data)
-      .then(response => {
-        console.log('auth response', response);
-        let result = response.data;
-        console.log('auth', result);
-        return dispatch(authSuccess(data.idToken));
-      })
-      .catch(function (error) {
-        console.log('auth response', error);
-        return dispatch(authFailure(error));
-      });
+    dispatch(post('auth/google', data))
+      .then(res => dispatch(authSuccess(data.idToken)))
+      .catch(err => dispatch(authFailure(err)));
   };
 }

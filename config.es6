@@ -1,6 +1,7 @@
 let config = {
   staging: {
     db: process.env.STAGING_DB_URI,
+    secure: true,
     googleAuth: {
       'clientID': '606219331744-rao3ldm0165pr686c1e2354elnijd22b.apps.googleusercontent.com',
       'clientSecret': process.env.GOOGLE_CLIENT_SECRET,
@@ -9,6 +10,7 @@ let config = {
   },
   local: {
     db: 'mongodb://localhost/secretsanta',
+    secure: false,
     googleAuth: {
       'clientID': '606219331744-9dl7cdr585hcre7eubl0t6b2fkbbabn6.apps.googleusercontent.com',
       'clientSecret': process.env.GOOGLE_CLIENT_SECRET,
@@ -16,7 +18,8 @@ let config = {
     }
   },
   test: {
-    db: 'mongodb://localhost/secretsanta-test'
+    db: 'mongodb://localhost/secretsanta-test',
+    secure: false
   }
 };
 

@@ -4,8 +4,9 @@ import ReactDom from 'react-dom/server';
 import React from 'react';
 import {Provider} from 'react-redux';
 import routes from './routes'
-import User from './lib/db/models/User';
-import GoogleJWTVerifier from "./lib/services/auth/GoogleJWTVerifier";
+import config from './config';
+import AuthService from "./lib/services/auth/AuthService";
+import UserEventService from "./lib/services/UserEventService";
 
 var express = require('express');
 var path = require('path');
@@ -13,8 +14,6 @@ var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
-var session = require('express-session');
-
 
 var app = express();
 
@@ -29,17 +28,41 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(cookieParser('FfgjkdgRFdsfadfI$'));
 app.use(express.static(path.join(__dirname, 'public')));
-app.use(session({secret: 'ilovescotchscotchyscotchscotch'})); // session secret
+
+app.use((req, res, next) => {
+  res.header('Access-Control-Allow-Origin', '*');
+  res.header('Access-Control-Allow-Credentials', true);
+  next();
+});
+
+app.options("/*", function (req, res, next) {
+  res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,OPTIONS');
+  res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization, Content-Length, X-Requested-With');
+  res.send(200);
+});
 
 app.post('/auth/google', async (req, res) => {
   try {
-    const payload = await new GoogleJWTVerifier().verify(req.body.idToken);
-    const userId = payload['sub'];
-    setCookie(res, {token: 'google token'});
+    let jwt = req.body.idToken;
+    const user = await new AuthService().authorize({type: 'Google', jwt: jwt});
+    console.log('Authorized as User', user.toJSON());
+    setCookie(res, {token: jwt});
     res.sendStatus(200);
   } catch (err) {
-    console.error(err);
+    console.error('Authorization error', err);
+    res.clearCookie(TOKEN_COOKIE);
+    res.sendStatus(403);
   }
+});
+
+app.get('/exchanges', authMiddleware(), (req, res) => {
+  console.log('GET /exchanges');
+  new UserEventService().getByUser(req.user)
+    .then(exchanges => res.send(exchanges))
+    .catch(err => {
+      console.error('GET /exchanges fails with error', err);
+      res.sendStatus(500)
+    });
 });
 
 app.post('/exchanges', authMiddleware(), (req, res) => {
@@ -53,12 +76,15 @@ app.post('/exchanges', authMiddleware(), (req, res) => {
 app.use((req, res) => {
   const cookies = req.signedCookies;
   console.debug('SERVER SIGNED COOKIES', cookies);
+  console.debug('SERVER COOKIES', req.cookies);
   const token = cookies && cookies['auth-token'] ? cookies['auth-token'] : undefined;
   const initialState = token ? {auth: {token: token}} : {};
   console.debug('SERVER INITIAL STATE', initialState);
 
   const context = {};
-  const store = configureStore();
+  const store = configureStore(initialState);
+
+  console.log('SERVER STATE', store.getState());
 
   let html = "";
   try {
@@ -129,23 +155,33 @@ app.use(function (err, req, res, next) {
 const TOKEN_COOKIE = 'auth-token';
 
 function authMiddleware() {
-  console.log('authMiddleware');
-  return function (req, res, next) {
-    let token = req.get('Authorization');
+  return async function (req, res, next) {
+    let token = req.get('Authorization') ? req.get('Authorization').replace('Bearer', '').trim() : undefined;
     console.log('TOKEN', token);
     if (!Boolean(token)) {
       res.sendStatus(401);
     } else {
-      User.findOne({'google.token': token}).then(user => {
-        if (Boolean(user)) {
-          setCookie(res, {token: token});
-          req.user = user;
-          next();
-        } else {
-          res.clearCookie(TOKEN_COOKIE);
-          res.sendStatus(403);
-        }
-      });
+      try {
+        const user = await new AuthService().authorize({type: 'Google', jwt: token});
+        setCookie(res, {token: token});
+        req.user = user;
+        next();
+      } catch (err) {
+        console.log('authMiddleware error', err);
+        res.clearCookie(TOKEN_COOKIE);
+        res.sendStatus(403);
+      }
+
+      // User.findOne({'google.token': token}).then(user => {
+      //   if (Boolean(user)) {
+      //     setCookie(res, {token: token});
+      //     req.user = user;
+      //     next();
+      //   } else {
+      //     res.clearCookie(TOKEN_COOKIE);
+      //     res.sendStatus(403);
+      //   }
+      // });
     }
   }
 }
@@ -154,7 +190,7 @@ function setCookie(res, data) {
   const WEEK = 7 * 24 * 60 * 60 * 1000;
   let date = new Date();
   date.setTime(date.getTime() + WEEK);
-  res.cookie(TOKEN_COOKIE, data.token, {expires: date, secure: true, httpOnly: true, signed: true});
+  res.cookie(TOKEN_COOKIE, data.token, {expires: date, httpOnly: true, signed: true, secure: config.secure});
 }
 
 module.exports = app;

@@ -5,10 +5,12 @@ import EmptyPostcard from "../EmptyPostcard/EmptyPostcard";
 import CheckBox from "../Checkbox/CheckBox";
 
 import './Event.css';
+import * as Dates from "../../utils/Dates";
 
 export default class Event extends React.Component {
 
     render() {
+        const endDate = this.props.endDate instanceof Date ? this.props.endDate : Dates.fromISOString(this.props.endDate);
         return (
             <div className='rounded border border-secondary mt-3' key={this.props.name}>
                 <div className='event-header p-3'>
@@ -34,7 +36,7 @@ export default class Event extends React.Component {
                             </div>);
                             return (<div>{res}</div>);
                         } else {
-                            return <EmptyPostcard assignDate={this.props.endDate.toDateString()}/>;
+                            return <EmptyPostcard assignDate={endDate.toDateString()}/>;
                         }
                     })()}
                 </div>

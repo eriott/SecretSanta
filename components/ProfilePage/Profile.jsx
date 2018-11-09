@@ -7,6 +7,7 @@ import {connect} from "react-redux";
 import './Profile.css'
 import Modal from "../Modal/Modal";
 import EditExchangeForm from "../EditExchangeForm/EditExchangeForm";
+import {requestExchanges} from "../../client/redux/actions/exchangeActions";
 
 const propTypes = {
   user: PropTypes.object.isRequired,
@@ -14,8 +15,11 @@ const propTypes = {
 };
 
 class Profile extends React.Component {
-  render() {
+  componentDidMount() {
+    this.props.dispatch(requestExchanges());
+  }
 
+  render() {
     console.log('STATE', this.props);
 
     return (
