@@ -8,6 +8,7 @@ import './Profile.css'
 import Modal from "../Modal/Modal";
 import EditExchangeForm from "../EditExchangeForm/EditExchangeForm";
 import {requestExchanges} from "../../client/redux/actions/exchangeActions";
+import {requestProfile} from "../../client/redux/actions/profileActions";
 
 const propTypes = {
   user: PropTypes.object.isRequired,
@@ -17,6 +18,7 @@ const propTypes = {
 class Profile extends React.Component {
   componentDidMount() {
     this.props.dispatch(requestExchanges());
+    this.props.dispatch(requestProfile());
   }
 
   render() {
@@ -60,7 +62,7 @@ class Profile extends React.Component {
           </div>
           <div id='profile' className='tab-pane fade' role='tabpanel'
                aria-labelledby='profile-tab'>
-            <ProfileForm {...this.props.user}/>
+            <ProfileForm/>
           </div>
         </div>
         <Modal id='editExchangeModal' title='Start exchange'>

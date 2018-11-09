@@ -55,8 +55,16 @@ app.post('/auth/google', async (req, res) => {
   }
 });
 
+app.get('/profile', authMiddleware(), (req, res) => {
+  try {
+    res.send(req.user.profile());
+  } catch (err) {
+    console.error('GET /profile fails with error', err);
+    res.sendStatus(500);
+  }
+});
+
 app.get('/exchanges', authMiddleware(), (req, res) => {
-  console.log('GET /exchanges');
   new UserEventService().getByUser(req.user)
     .then(exchanges => res.send(exchanges))
     .catch(err => {
