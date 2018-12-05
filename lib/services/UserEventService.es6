@@ -4,11 +4,12 @@ import Addressee from '../dto/Аddressee'
 
 export default class UserEventService {
     getByUser(user) {
-        return Event.find({members: user._id}).populate('members').then(events => {
+        return Event.find({members: user._id}).sort('-startDate').populate('members').then(events => {
             return events.map(event => {
                 let addressee;
                 let myPair;
                 let showGiftSentMessage, showGiftReceivedMessage;
+
                 if (event.pairs) {
                     myPair = event.pairs.filter(pair => pair.from.equals(user._id))[0]; // from me pair
                     if (myPair && myPair.to) {
