@@ -13,7 +13,7 @@ let eventSchema = mongoose.Schema({
         isGiftSent: {type: Boolean, default: false},
         isGiftReceived: {type: Boolean, default: false}
     }]
-});
+}, { usePushEach: true });
 
 // create the model for users and expose it to our app
 module.exports = mongoose.model('Event', eventSchema);
