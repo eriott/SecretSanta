@@ -9,6 +9,7 @@ export default class UserEventService {
                 let addressee;
                 let myPair;
                 let showGiftSentMessage, showGiftReceivedMessage;
+                let receivedTrackingNumber;
 
                 if (event.pairs) {
                     myPair = event.pairs.filter(pair => pair.from.equals(user._id))[0]; // from me pair
@@ -22,7 +23,7 @@ export default class UserEventService {
 
                     let toMePair = event.pairs.filter(pair => pair.to.equals(user._id))[0];
                     showGiftSentMessage = toMePair && toMePair.isGiftSent;
-
+                    receivedTrackingNumber = toMePair ? toMePair.trackingNumber : undefined;
                 }
 
                 let timeDiff = Math.abs(event.endDate.getTime() - event.startDate.getTime());
@@ -35,6 +36,8 @@ export default class UserEventService {
                     user: user,
                     addressee: addressee,
                     isGiftSent: myPair ? myPair.isGiftSent : undefined,
+                    sentTrackingNumber: myPair && myPair.trackingNumber ? myPair.trackingNumber : '',
+                    receivedTrackingNumber: receivedTrackingNumber,
                     isGiftReceived: myPair ? myPair.isGiftReceived : undefined,
                     endDate: event.endDate.toDateString(),
                     membersCount: event.members.length,
@@ -57,6 +60,10 @@ export default class UserEventService {
         }
         if (event.isGiftReceived) {
             set['pairs.$.isGiftReceived'] = event.isGiftReceived;
+        }
+
+        if (event.sentTrackingNumber === '' || Boolean(event.sentTrackingNumber)) {
+            set['pairs.$.trackingNumber'] = event.sentTrackingNumber;
         }
 
         return Event.update({_id: event.id, 'pairs.from': event.user._id}, {'$set': set})

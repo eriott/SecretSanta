@@ -27,11 +27,17 @@ block content
                                     input.event-id(type="hidden" name="target" value="#{event.id}")
                                     - if (event.showGiftSentMessage) {
                                         div.gift-sended-message.alert.alert-info.fade.show(role="alert")
-                                            strong
-                                                | Hey!
-                                            |  Santa has sent gift to you!
-                                            img(src="/images/santa.png")
-                                     - }
+                                                strong
+                                                    | Hey!
+                                                |  Santa sent gift to you!
+                                                img(src="/images/santa.png")
+                                                - if (event.receivedTrackingNumber) {
+                                                    | Track:
+                                                    span.trackingNumberCopy
+                                                        b
+                                                            |  #{event.receivedTrackingNumber}
+                                                - }
+                                    - }
                                     - if (event.showGiftReceivedMessage) {
                                         div.gift-received-message.alert.alert-info.fade.show(role="alert")
                                             strong
@@ -61,12 +67,15 @@ block content
                                             div.col-lg-9
                                                 | #{event.addressee.about}
                                     div.actions
-                                        div.checkbox
-                                            label.isSent.custom-control.custom-checkbox
-                                                input.custom-control-input(type="checkbox", name="isSent", checked=(event.isGiftSent ? 'checked' : undefined))
-                                                span.custom-control-indicator
-                                                span.custom-control-description
-                                                    | I sent the gift
+                                        div.form-row
+                                            div.checkbox.col
+                                                label.isSent.custom-control.custom-checkbox
+                                                    input.custom-control-input(type="checkbox", name="isSent", checked=(event.isGiftSent ? 'checked' : undefined))
+                                                    span.custom-control-indicator
+                                                    span.custom-control-description
+                                                        | I sent the gift
+                                            div.col
+                                                input.trackingNumber.form-control(type="text", name="trackingNumber", value="#{event.sentTrackingNumber}", placeholder='Tracking Number (optional)')
                                         div.checkbox
                                             label.isReceived.custom-control.custom-checkbox
                                                 input.custom-control-input(type="checkbox", name="isSent", checked=(event.isGiftReceived ? 'checked' : undefined))
@@ -141,10 +150,57 @@ block content
             $.post('/update_event', event)
         })
 
+        $('.gift-sended-message').tooltip({
+          trigger: 'click'
+        });
+
+        function setTooltip(message) {
+          $('.gift-sended-message').tooltip('hide')
+            .attr('data-original-title', message)
+            .tooltip('show');
+        }
+
+        function hideTooltip() {
+          setTimeout(function () {
+            $('.gift-sended-message').tooltip('hide');
+          }, 1000);
+        }
+
+        var debounceTimer;
+
+        $('.trackingNumber').keyup(function () {
+          if (debounceTimer)
+            clearTimeout(debounceTimer)
+
+          var id = $(this).parents('.event-content').find('.event-id').val();
+          var text = $(this).val();
+          $(this).parents('.event-content').find('.isSent > input').prop("checked", Boolean(text));
+          debounceTimer = setTimeout(function() {
+            var event = {};
+            event.id = id;
+            event.isGiftSent = Boolean(text);
+            event.sentTrackingNumber = text;
+            $.post('/update_event', event)
+          }, 2000);
+        })
+
         $('.isReceived').click(function () {
             var event = {};
             var checkbox = $(this).find('input');
             event.id = $(this).parents('.event-content').find('.event-id').val();
             event.isGiftReceived = checkbox.prop('checked');
             $.post('/update_event', event)
+        })
+
+        $('.gift-sended-message').click(function () {
+          var trackingNumberElem = $(this).parents('.event-content').find('.trackingNumberCopy')
+          if (trackingNumberElem) {
+            var $temp = $("<input>");
+            $("body").append($temp);
+            $temp.val(trackingNumberElem.text()).select();
+            document.execCommand("copy");
+            $temp.remove();
+            setTooltip('Track number copied to clipboard!');
+            hideTooltip();
+          }
         })

@@ -8,6 +8,8 @@ export default class UserEvent {
         this.addressee = data.addressee;
         this.isGiftSent = data.isGiftSent;
         this.isGiftReceived = data.isGiftReceived;
+        this.sentTrackingNumber = data.sentTrackingNumber;
+        this.receivedTrackingNumber = data.receivedTrackingNumber;
         this.membersCount = data.membersCount;
         this.completion = data.completion;
         this.showGiftSentMessage = data.showGiftSentMessage;

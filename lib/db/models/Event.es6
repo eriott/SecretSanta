@@ -11,6 +11,7 @@ let eventSchema = mongoose.Schema({
         from: ObjectId,
         to: ObjectId,
         isGiftSent: {type: Boolean, default: false},
+        trackingNumber: {type: String},
         isGiftReceived: {type: Boolean, default: false}
     }]
 }, { usePushEach: true });
