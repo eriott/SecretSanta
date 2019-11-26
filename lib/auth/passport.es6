@@ -27,7 +27,7 @@ module.exports = function (passport) {
 
     },
     function (token, refreshToken, profile, done) {
-      const CODEGIRLS_EVENT = 'codegirls18';
+      const CODEGIRLS_EVENT = 'codegirls19';
 
       // make the code asynchronous
       // User.findOne won't fire until we have all our data back from Google
