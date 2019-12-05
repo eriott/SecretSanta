@@ -2,7 +2,7 @@ import Event from '../db/models/Event'
 
 export default class AssignAddressesService {
   assign () {
-    const CODEGIRLS_EVENT = 'codegirls18';
+    const CODEGIRLS_EVENT = 'codegirls19';
     console.log('Assign pairs for event', CODEGIRLS_EVENT);
     return Event.find({uid: CODEGIRLS_EVENT}).populate('members').then(events => {
       return Promise.all(events.map(event => {
